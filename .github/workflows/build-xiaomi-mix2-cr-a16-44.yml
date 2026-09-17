@@ -84,8 +84,8 @@ env:
   BUILD_DEBUGGER: "false" # Output build errors.
   SKIP_PATCH: "false" # Ignore errors found in Patch Debugger.
 
-  BUILD_OTHER_CONFIG: "false" # Merge config files.
-  MERGE_CONFIG_FILES: ""
+  BUILD_OTHER_CONFIG: "true" # Merge config files.
+  MERGE_CONFIG_FILES: "vendor/xiaomi/chiron.config"
 
   FREE_MORE_SPACE: "false" # if u want get more space, enabled it.
 
@@ -119,13 +119,8 @@ jobs:
           # Only ${{ env.DEVICE_NAME }} use it.
           cd $GITHUB_WORKSPACE/device_kernel
 
-          # Get neccssary components
-          # git clone https://github.com/duckyduckG/kernel_techpack_mi845_419.git -b main techpack/mi845
-          # git clone https://github.com/duckyduckG/devicetree_qcom-sdm845_419.git -b main arch/arm64/boot/dts/qcom-sdm845
-          # git clone https://github.com/duckyduckG/devicetree_xiaomi_419.git -b master-dipper arch/arm64/boot/dts/xiaomi
-
           # Build config
-          echo "CONFIG_COMPAT_VDSO=y" >> ./arch/arm64/configs/${{ env.DEFCONFIG_NAME }}
+          echo "CONFIG_COMPAT_VDSO=n" >> ./arch/arm64/configs/${{ env.DEFCONFIG_NAME }}
           echo "CONFIG_LTO_NONE=n" >> ./arch/arm64/configs/${{ env.DEFCONFIG_NAME }}
           echo "CONFIG_SHADOW_CALL_STACK=n" >> ./arch/arm64/configs/${{ env.DEFCONFIG_NAME }}
           echo "CONFIG_RELR=n" >> ./arch/arm64/configs/${{ env.DEFCONFIG_NAME }}
